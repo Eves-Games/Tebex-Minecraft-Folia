@@ -16,7 +16,9 @@ subprojects {
     plugins.apply("com.github.johnrengelman.shadow")
 
     java {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(8))
+        }
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -48,6 +50,7 @@ subprojects {
         maven("https://maven.nucleoid.xyz/") {
             name = "nucleoid"
         }
+        maven("https://repo.papermc.io/repository/maven-public/")
     }
 
     tasks.named("processResources", Copy::class.java) {
@@ -59,6 +62,16 @@ subprojects {
         filesNotMatching("**/*.zip") {
             expand(props)
         }
+    }
+}
+
+project(":bukkit") {
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
